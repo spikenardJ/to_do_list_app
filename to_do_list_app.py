@@ -38,10 +38,10 @@ def menu_selections():
                 try:
                     year = int(input("Enter a year using 4 numbers: "))
                     month = int(input("Enter a month using 2 numbers: "))
-                    day = int(input("Enter a dayusing 2 numbers: "))
+                    day = int(input("Enter a day using 2 numbers: "))
                     d = date(year, month, day)
                 except ValueError:
-                    print("Please enter date using only numbers: year 0000, month 00, day 00")
+                    print("Please enter the date using only numbers: year 0000, month 00, day 00")
             else:
                 pass
             priority_input = input(f"Is {new_task} high priority? (yes/no): ").lower()
@@ -52,15 +52,26 @@ def menu_selections():
                 incomplete_tasks.append(new_task)
                 print(f"{new_task} has been added to your tasks.")
         elif selection == "2":
-            print(colored("\nIncomplete Tasks - HIGH PRIORITY:", "grey", attrs=["underline"]))
-            for in_task in incomplete_tasks_high_priority:
-                print(colored(f"    • {in_task} ✧ {d}", "red"))
-            print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
-            for i_task in incomplete_tasks:
-                print(colored(f"    • {i_task} ✧ {d}", "cyan"))
-            print(colored("\nCompleted Tasks:", "grey", attrs=["underline"]))  
-            for c_task in completed_tasks:
-                print(colored(f"    • {c_task}  ✧ {d}", "magenta"))
+            try:
+                print(colored("\nIncomplete Tasks - HIGH PRIORITY:", "grey", attrs=["underline"]))
+                for in_task in incomplete_tasks_high_priority:
+                    print(colored(f"    • {in_task} ✧ {d}", "red"))
+                print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
+                for i_task in incomplete_tasks:
+                    print(colored(f"    • {i_task} ✧ {d}", "cyan"))
+                print(colored("\nCompleted Tasks:", "grey", attrs=["underline"]))  
+                for c_task in completed_tasks:
+                    print(colored(f"    • {c_task}  ✧ {d}", "magenta"))
+            except UnboundLocalError:
+                print(colored("\nIncomplete Tasks - HIGH PRIORITY:", "grey", attrs=["underline"]))
+                for in_task in incomplete_tasks_high_priority:
+                    print(colored(f"    • {in_task}", "red"))
+                print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
+                for i_task in incomplete_tasks:
+                    print(colored(f"    • {i_task}", "cyan"))
+                print(colored("\nCompleted Tasks:", "grey", attrs=["underline"]))  
+                for c_task in completed_tasks:
+                    print(colored(f"    • {c_task}", "magenta"))
         elif selection == "3":
             finished_task = input(str("Enter your completed task: ")).title()
             completed_tasks.append(finished_task)
