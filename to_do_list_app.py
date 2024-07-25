@@ -24,13 +24,60 @@ def to_do_list_menu():
     print(colored("Delete Task", "grey"))
     print(colored("5.", "cyan", attrs=["bold"]), end=" ")
     print(colored("Quit", "grey"))
-    
+
+def incomplete_tasks():
+    try:
+        print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
+        for index, task in enumerate(tasks):
+            if task["status"] == "incomplete":
+                print(colored(f"   {index + 1} • {task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "cyan"))
+        print(colored("\nCompleted Tasks:", "grey", attrs=["underline"]))  
+        for index, task in enumerate(tasks):
+            if task["status"] == "complete":
+                print(colored(f"   {index + 1} • {task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "magenta"))
+    except ValueError:
+            print("Please enter your task using only numbers.") 
+
+def completed_tasks():
+    print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
+    for index, task in enumerate(tasks):
+        if task["status"] == "incomplete":
+            print(colored(f"   {index + 1} • {task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "cyan"))
+    finished_task = int(input("Enter the number of completed task: "))
+    try:
+        tasks[finished_task - 1]["status"] = "complete"
+        print(f"The task was completed.")
+    except ValueError:
+            print("Please enter your completed task using only numbers.")
+    print(f"{finished_task} has been completed.")
+
+def delete_tasks():
+    try:
+        print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
+        for index, task in enumerate(tasks):
+            if task["status"] == "incomplete":
+                print(colored(f"   {index + 1} • {task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "cyan"))
+        print(colored("\nCompleted Tasks:", "grey", attrs=["underline"]))  
+        for index, task in enumerate(tasks):
+            if task["status"] == "complete":
+                print(colored(f"   {index + 1} • {task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "magenta"))
+        print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
+        for index, task in enumerate(tasks):
+            if task["status"] == "incomplete":
+                print(colored(f"   {index + 1} • {task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "cyan"))
+        delete_task = int(input("Enter the number of the task you want to delete: "))
+        tasks[delete_task - 1]["status"] = "delete"
+        print(f"{task["name"]} has been removed from your tasks.")
+        del task["delete"]
+            # else:
+            #     print(f"{task["name"]} was not found in tasks.")
+    except ValueError:
+        print("Please enter the task you are deleting using only numbers.") 
 
 def menu_selections():
     from datetime import date, datetime
     while True:
         task = {}
-        c_task = {}
         selection = input("\nPlease enter your selection: ")
         if selection == "1":
             try:
@@ -53,53 +100,23 @@ def menu_selections():
             priority_input = input(f"Is {new_task} high priority or low priority? (high/low): ").lower()
             if priority_input == "high":
                 task["priority"] = "High Priority"
-                print(f"{new_task} has been added to your HP tasks.")
+                print(f"{new_task} has been added as a high priority task.")
             else:
                 task["priority"] = "Low Priority"
-                print(f"{new_task} has been added to your LP tasks.")
+                print(f"{new_task} has been added as a low priority task.")
+            task["status"] = "incomplete"
             tasks.append(task)
         elif selection == "2":
-            try:
-                print(colored("\nIncomplete Tasks:", "grey", attrs=["underline"]))
-                for task in tasks:
-                    print(colored(f"    • {task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "cyan"))
-                # print(colored("\nIncomplete Tasks - Low Priority:", "grey", attrs=["underline"]))
-                # for i_task in incomplete_tasks:
-                #     print(colored(f"    • {i_task} ✧ {format_date}", "cyan"))
-                print(colored("\nCompleted Tasks:", "grey", attrs=["underline"]))  
-                for c_task in tasks:
-                    print(colored(f"    • {c_task["name"]} ✧ DUE: {task["due_date"]} ✧ {task["priority"]}", "magenta"))
-            except UnboundLocalError:
-                print(colored("\nIncomplete Tasks - HIGH PRIORITY:", "grey", attrs=["underline"]))
-                for in_task in incomplete_tasks_high_priority:
-                    print(colored(f"    • {in_task}", "red"))
-                print(colored("\nIncomplete Tasks - Low Priority:", "grey", attrs=["underline"]))
-                for i_task in incomplete_tasks:
-                    print(colored(f"    • {i_task}", "cyan"))
-                print(colored("\nCompleted Tasks:", "grey", attrs=["underline"]))  
-                for c_task in completed_tasks:
-                    print(colored(f"    • {c_task}", "magenta"))
+            incomplete_tasks()
         elif selection == "3":
-            finished_task = input(str("Enter your completed task: ")).title()
-            c_task["name"] = finished_task
-            try:
-                completed_tasks.append(finished_task)
-                for inc in [incomplete_tasks, incomplete_tasks_high_priority]:
-                    inc.remove(finished_task)
-            except ValueError:
-                    print("Please enter your task in words only.")
-            print(f"{finished_task} has been completed.")
-        elif selection == "3":
-            incomplete_tasks_high_priority.remove(finished_task)
+            completed_tasks()
         elif selection == "4":
-            task_to_delete = input("Enter the task that you want to delete: ").title()
-            if task_to_delete in incomplete_tasks:
-                incomplete_tasks.remove(task_to_delete)
-                print(f"{task_to_delete} has been removed from your tasks.")
-            else:
-                print(f"{task_to_delete} was not found in tasks.")
+            delete_tasks()
         elif selection == "5":
-            print("Thank you for using the To-Do List App! 👋 🤠")
+            print("Thank you for using the", end=" ")
+            print(colored(" To-Do List", "cyan", attrs=["bold"]), end=" ")
+            print(" App! 👋 🤠", end=" ")
+            print(colored("TTFN\n", "magenta", attrs=["bold"]))
             break
 
 to_do_list_menu()
