@@ -1,0 +1,1 @@
+Welcome to the To-Do List App! Easily add tasks to your to-do lists with priority options and due date features. Menu options include: 1. Add a Task, 2. View Tasks, 3. Mark Task Complete, 4. Delete Task, 5. Quit. Upon completion, your task is moved to a completed task list and is color coded for quick recognition of completion. Make your life easier with the "To-Do List App"!
