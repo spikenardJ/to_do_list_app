@@ -36,6 +36,8 @@ def incomplete_tasks():
     except ValueError:
             print("Please enter your task using only numbers.")
             incomplete_tasks()
+    finally:
+        print("\n\n😎")
 
 def completed_tasks():
     try:
